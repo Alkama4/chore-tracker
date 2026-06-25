@@ -1,0 +1,95 @@
+.card {
+    background-color: var(--c-bg-level-1);
+    border-radius: 16px;
+    padding: var(--spacing-md-lg);
+}
+
+
+a.hover-line {
+    text-decoration: none;
+    color: currentColor !important;
+}
+a.hover-line:hover {
+    text-decoration: underline;
+}
+
+.subtle {
+    color: var(--c-text-subtle) !important;
+}
+a.subtle:hover,
+.btn.subtle:hover,
+button.subtle:hover {
+    color: var(--c-text-soft) !important;
+}
+
+.soft {
+    color: var(--c-text-soft) !important;
+}
+a.subtle:hover,
+.btn.subtle:hover,
+button.subtle:hover {
+    color: var(--c-text) !important;
+}
+
+
+/* Fix inline icon positioning */
+svg.inline {
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+
+.badge {
+    /* Set the bg and text colors in the component */
+    font-size: var(--fs-neg-2);
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--border-radius-sm);
+    white-space: nowrap;
+
+    &.badge-sm {
+        font-size: var(--fs-neg-4);
+        padding: 2px 6px;
+    }
+}
+
+.code {
+    font-family: monospace;
+    font-size: var(--fs-neg-1);
+    background: var(--c-bg-level-2);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+}
+
+.code-area {
+    padding: var(--spacing-sm-md);
+    background: var(--c-bg);
+    border-radius: var(--border-radius-sm-md);
+    border: 1px solid var(--c-border);
+    color: var(--c-text-soft);
+}
+
+
+span.seperator {
+    opacity: 0.5;
+}
+
+
+.loading-wave {
+    background: linear-gradient(
+        90deg,
+        var(--c-bg-level-1) 40%,
+        var(--c-bg-level-2) 70%,
+        var(--c-bg-level-1) 100%
+    );
+    background-size: 200% 100%;
+    animation: loading-wave 1.25s infinite linear;
+}
+@keyframes loading-wave {
+    0% {
+        background-position: 0% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

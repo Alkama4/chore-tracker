@@ -1,0 +1,268 @@
+
+/* --------- All/Base --------- */
+
+.no-scroll {
+    overflow: hidden;
+}
+
+html {
+    /* Overrides the initially set bg color (script in index.html) */
+    background-color: var(--c-bg-base) !important;
+}
+body {
+    font-family: 'Inter';
+    background: var(--c-bg-base);
+    color: var(--c-text);
+    font-size: var(--fs-0);
+    color-scheme: var(--color-scheme);
+    overflow-y: scroll;
+
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    min-height: 100vh;
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--c-primary);
+}
+
+*::selection {
+    background-color: var(--c-primary);
+    color: var(--c-text-inv);
+}
+
+.layout-contained {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: calc(1600px + 10vw);
+    padding: 0 var(--spacing-layout-inline);
+    margin: 0 auto;
+}
+.layout-full {
+    box-sizing: border-box;
+    width: 100%;
+}
+.layout-full-contained {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: calc(1600px + 10vw);
+    margin-inline: auto;
+}
+.layout-spacing-top {
+    margin-top: var(--spacing-md-lg);
+}
+.layout-spacing-bottom {
+    margin-bottom: var(--spacing-lg);
+}
+
+
+
+/* --------- Inputs --------- */
+
+/* Input */
+input, select {
+    background-color: var(--c-input);
+    color: var(--c-input-text);
+    font-family: 'Inter';
+    font-size: var(--fs-0);
+
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    padding: var(--spacing-sm);
+
+    transition: border-color 0.1s var(--transition-ease-out);
+}
+input:hover,
+select:hover {
+    border-color: var(--c-border-strong);
+}
+input:user-invalid,
+select:user-invalid {
+    border-color: var(--c-negative);
+}
+/* input:user-valid {
+    border-color: var(--c-positive);
+} */
+
+
+/* Form */
+form, .settings-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+form {
+    max-width: 500px;
+}
+form input,
+form select,
+.settings-list input,
+.settings-list select {
+    margin-top: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+form label,
+.settings-list label {
+    font-size: var(--fs-neg-2);
+    color: var(--c-text);
+}
+form h1,
+form h2,
+form h3,
+form h4,
+form h5,
+form h6 {
+    margin-top: 0;
+    /* margin-bottom: 0; */
+}
+form .checkbox-row,
+.settings-list .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+form .checkbox-row input[type="checkbox"],
+.settings-list .checkbox-row input[type="checkbox"] {
+    margin: 0;
+}
+
+/* --------- Basic elements --------- */
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+h1 {
+    font-size: var(--fs-4);
+}
+h2 {
+    font-size: var(--fs-3);
+}
+h3 {
+    font-size: var(--fs-2);
+}
+h4 {
+    font-size: var(--fs-1);
+}
+h5 {
+    font-size: var(--fs-0);
+}
+h6 {
+    font-size: var(--fs-neg-1);
+}
+
+label {
+    font-weight: 500;
+    color: var(--c-text-subtle);
+    padding-bottom: var(--spacing-xs);
+    display: block;
+    cursor: auto;
+}
+
+/* Link */
+a {
+    text-decoration: underline;
+    color: var(--c-text);
+    transition: color 0.1s var(--transition-ease-out);
+
+    &:hover,
+    &:active {
+        color: var(--c-text-strong);
+    }
+}
+
+/* Paragraph/card/section */
+p {
+    margin: var(--spacing-md) 0;
+}
+
+
+/* Listing */
+dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--spacing-xl);
+    row-gap: var(--spacing-sm);
+}
+dl dt {
+    color: var(--c-text-subtle);
+}
+dl dd {
+    margin: 0;
+    font-weight: 600;
+}
+
+
+/* Horizontal rule */
+hr {
+    min-height: 2px;
+    min-width: 2px;
+    background-color: var(--c-border);
+    margin: var(--spacing-sm);
+    border: none;
+}
+
+
+/* Table */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+thead th {
+    background-color: var(--c-bg-level-1);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+th, td {
+    padding: var(--spacing-sm) var(--spacing-sm-md);
+    text-align: left;
+    border: 1px solid var(--c-border);
+}
+
+/* Table Border fix */
+table td {
+    border-top-width: 0;
+}
+table tr * {
+    border-right-width: 0;
+}
+table tr *:last-child {
+    border-right-width: 1px;
+}
+
+
+details {
+    summary {
+        cursor: pointer;
+        color: var(--c-text);
+        transition: color 0.1s ease-out;
+
+        &:hover {
+            color: var(--c-text-strong)
+        }
+    }
+    .content {
+        margin-top: var(--spacing-md);
+        padding: var(--spacing-md);
+        background-color: var(--c-bg-level-2);
+        border-radius: var(--border-radius-md);
+
+        & > :first-child {
+            margin-top: 0;
+        }
+        & > :last-child {
+            margin-bottom: 0;
+        }
+    }
+}

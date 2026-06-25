@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Chore Tracker: Vue",
+            "type": "shell",
+            "command": "npm run dev",
+            "options": {
+                "cwd": "frontend"
+            },
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Chore Tracker: FastAPI",
+            "type": "shell",
+            "options": {
+                "cwd": "backend"
+            },
+            "linux": {
+                "command": "venv/bin/uvicorn app.main:app --reload --host 0.0.0.0"
+            },
+            "osx": {
+                "command": "venv/bin/uvicorn app.main:app --reload --host 0.0.0.0"
+            },
+            "windows": {
+                "command": "venv\\Scripts\\uvicorn.exe app.main:app --reload --host 0.0.0.0"
+            },
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Chore Tracker: all",
+            "dependsOn": [
+                "Chore Tracker: FastAPI",
+                "Chore Tracker: Vue"
+            ],
+            "dependsOrder": "parallel",
+            "problemMatcher": []
+        }
+    ]
+}
