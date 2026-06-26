@@ -1,5 +1,5 @@
 <script setup>
-import { AlbumCovers, Home, List, Search, User } from '@boxicons/vue';
+import { AlbumCovers, Home, List, Plus } from '@boxicons/vue';
 </script>
 
 <template>
@@ -17,59 +17,46 @@ import { AlbumCovers, Home, List, Search, User } from '@boxicons/vue';
                             to="/transactions"
                         >
                             <List pack="filled" size="sm"/>
-                            <span>Transactions</span>
+                            <span>Chores</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link 
                             class="btn btn-text no-deco" 
-                            to="/analytics"
+                            to="/transactions"
                         >
-                            <AlbumCovers pack="filled" size="sm"/>
-                            <span>Analytics</span>
+                            <Plus pack="filled" size="sm"/>
+                            <span>New chore</span>
                         </router-link>
                     </li>
                 </ul>
-                <router-link 
-                    class="btn btn-user btn-even-padding no-deco"
-                    to="/account"
-                >
-                    <User pack="filled" size="sm"/>
-                </router-link>
             </div>
         </nav>
 
         <div class="background"></div>
     </header>
 
-    <nav class="mobile-nav" :class="{'nav-visible': displayNav}">
+    <nav class="mobile-nav nav-visible">
         <router-link class="btn btn-text no-deco" to="/">
             <Home pack="filled"/>
             <span>Home</span>
         </router-link>
-        <router-link class="btn btn-text no-deco" to="/transactions">
-            <List pack="filled"/>
-            <span>Transactions</span>
-        </router-link>
+
         <router-link class="btn btn-text no-deco" to="/new">
-            <Search pack="basic"/>
-            <span>New</span>
+            <Plus pack="basic"/>
+            <span>New chore</span>
         </router-link>
-        <router-link class="btn btn-text no-deco" to="/analytics">
-            <AlbumCovers pack="filled"/>
-            <span>Analytics</span>
-        </router-link>
-        <router-link class="btn btn-text no-deco" to="/account">
-            <User pack="filled"/>
-            <span>Account</span>
+        <router-link class="btn btn-text no-deco" to="/chores">
+            <List pack="filled"/>
+            <span>Chores</span>
         </router-link>
     </nav>
 
-    <main :class="{'nav-visible': displayNav}">
+    <main class="nav-visible">
         <router-view :key="$route.path"/>
     </main>
 
-    <footer :class="{'nav-visible': displayNav}">
+    <footer class="nav-visible">
         © Aleksi Malkki 2026. All Rights Reserved.
     </footer>
 </template>
