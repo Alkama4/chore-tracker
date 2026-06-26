@@ -1,5 +1,4 @@
-import os
-from backend.app.config import DATABASE_URL
+from app.config import DATABASE_URL
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import declarative_base
 
