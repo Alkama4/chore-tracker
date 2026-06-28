@@ -33,13 +33,17 @@ class ChoreCreate(ChoreBase):
     fields: Optional[List[ChoreFieldCreate]] = []
 
 class ChoreReplace(ChoreBase):
-    chore_id: int
     fields: Optional[List[ChoreFieldReplace]] = []
 
 class ChoreRead(ChoreBase):
     chore_id: int
     fields: Optional[List[ChoreFieldRead]] = []
     
+    model_config = ConfigDict(from_attributes=True)
+
+class ChoreReadList(BaseModel):
+    chores: Optional[List[ChoreRead]] = []
+
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -81,3 +85,11 @@ class ChoreEventRead(ChoreEventBase):
     field_values: Optional[List[ChoreEventFieldRead]] = []
     
     model_config = ConfigDict(from_attributes=True)
+
+
+# ---- Generic ----
+
+class ConfirmationResponse(BaseModel):
+    id: int
+    success: bool
+    msg: str

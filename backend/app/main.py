@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
 from app import config
-from app.routers import root
+from app.routers import root, chore
 
 _ = config  # Load ENVs
 proxy_root_path = os.getenv("PROXY_ROOT_PATH", "")
@@ -25,6 +25,7 @@ app.add_middleware(
 )
 
 app.include_router(root.router, prefix="", tags=["Root"])
+app.include_router(chore.router, prefix="/chore", tags=["Chore"])
 
 @app.get("/", include_in_schema=False)
 async def redirect_to_docs():
