@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.dependencies import get_db
-from app.models import Chore, ChoreField, ChoreEvent
+from app.models import Chore, ChoreField, ChoreEvent, ChoreEventFieldValue
 from app.schemas import (
     ChoreCreate,
     ChoreReplace,
@@ -114,4 +114,173 @@ async def delete_chore(
         "id": chore_id,
         "success": True,
         "msg": "Chore deleted successfully!"
+    }
+
+
+
+# ---- CHORE EVENTS ENDPOINTS ----
+
+@router.post("/events", response_model=ChoreEventRead, status_code=201)
+async def create_chore_event(
+    event_data: ChoreEventCreate,
+    db: AsyncSession = Depends(get_db)
+):
+    # 1. Verify the parent chore exists and fetch its valid fields
+    stmt = select(Chore).where(Chore.chore_id == event_data.chore_id).options(selectinload(Chore.fields))
+    result = await db.execute(stmt)
+    chore_model = result.scalar_one_or_none()
+    
+    if not chore_model:
+        raise HTTPException(status_code=404, detail="Parent chore not found")
+        
+    # 2. Safety check: ensure incoming field_ids belong to this chore
+    valid_field_ids = {f.field_id for f in chore_model.fields}
+    incoming_field_ids = {fv.field_id for fv in event_data.field_values or []}
+    
+    if not incoming_field_ids.issubset(valid_field_ids):
+        raise HTTPException(
+            status_code=400, 
+            detail="One or more field_ids do not belong to this specific chore template."
+        )
+
+    # 3. Construct the Event
+    event_model = ChoreEvent(
+        chore_id=event_data.chore_id,
+        date=event_data.date,
+        notes=event_data.notes
+    )
+    
+    for fv in event_data.field_values or []:
+        event_model.field_values.append(
+            ChoreEventFieldValue(
+                field_id=fv.field_id,
+                value=fv.value
+            )
+        )
+        
+    db.add(event_model)
+    await db.commit()
+    
+    # Refresh to ensure everything (including nested field schemas) loads up perfectly for response
+    stmt_refresh = (
+        select(ChoreEvent)
+        .where(ChoreEvent.event_id == event_model.event_id)
+        .options(
+            selectinload(ChoreEvent.field_values)
+            .selectinload(ChoreEventFieldValue.field)
+        )
+    )
+    refresh_res = await db.execute(stmt_refresh)
+    return refresh_res.scalar_one()
+
+
+@router.get("/events/{event_id}", response_model=ChoreEventRead)
+async def get_chore_event(
+    event_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    # We load field_values AND the matching configuration field definition
+    stmt = (
+        select(ChoreEvent)
+        .where(ChoreEvent.event_id == event_id)
+        .options(
+            selectinload(ChoreEvent.field_values)
+            .selectinload(ChoreEventFieldValue.field)
+        )
+    )
+    result = await db.execute(stmt)
+    event_model = result.scalar_one_or_none()
+    
+    if not event_model:
+        raise HTTPException(status_code=404, detail="Chore event log not found")
+        
+    return event_model
+
+
+@router.put("/events/{event_id}", response_model=ChoreEventRead)
+async def update_chore_event(
+    event_id: int,
+    event_data: ChoreEventReplace,
+    db: AsyncSession = Depends(get_db)
+):
+    # Fetch the event along with its values and the structural definitions
+    stmt = (
+        select(ChoreEvent)
+        .where(ChoreEvent.event_id == event_id)
+        .options(
+            selectinload(ChoreEvent.field_values)
+            .selectinload(ChoreEventFieldValue.field)
+        )
+    )
+    result = await db.execute(stmt)
+    event_model = result.scalar_one_or_none()
+    
+    if not event_model:
+        raise HTTPException(status_code=404, detail="Chore event log not found")
+        
+    # Update core details
+    event_model.date = event_data.date
+    event_model.notes = event_data.notes
+
+    # Sync custom field values
+    if event_data.field_values is not None:
+        current_values = list(event_model.field_values)
+        updated_value_ids = set()
+        
+        for fv in event_data.field_values:
+            # If value_id exists, modify the existing entity matching it
+            if hasattr(fv, 'value_id') and fv.value_id is not None:
+                existing = next((v for v in current_values if v.value_id == fv.value_id), None)
+                if existing:
+                    existing.value = fv.value
+                    updated_value_ids.add(fv.value_id)
+            else:
+                # If no value_id, append a brand new field value entry
+                event_model.field_values.append(
+                    ChoreEventFieldValue(
+                        field_id=fv.field_id,
+                        value=fv.value
+                    )
+                )
+                
+        # Clean up values that were omitted from the payload
+        for v in current_values:
+            if v.value_id not in updated_value_ids:
+                event_model.field_values.remove(v)
+                await db.delete(v)
+                
+    await db.commit()
+    
+    # Reload fresh state
+    stmt_refresh = (
+        select(ChoreEvent)
+        .where(ChoreEvent.event_id == event_id)
+        .options(
+            selectinload(ChoreEvent.field_values)
+            .selectinload(ChoreEventFieldValue.field)
+        )
+    )
+    refresh_res = await db.execute(stmt_refresh)
+    return refresh_res.scalar_one()
+
+
+@router.delete("/events/{event_id}", response_model=ConfirmationResponse)
+async def delete_chore_event(
+    event_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    stmt = select(ChoreEvent).where(ChoreEvent.event_id == event_id)
+    result = await db.execute(stmt)
+    event_model = result.scalar_one_or_none()
+    
+    if not event_model:
+        raise HTTPException(status_code=404, detail="Chore event log not found")
+        
+    await db.delete(event_model)
+    await db.commit()
+    
+    return {
+        "id": event_id,
+        "success": True,
+        "msg": "Chore event history log deleted successfully!"
     }
