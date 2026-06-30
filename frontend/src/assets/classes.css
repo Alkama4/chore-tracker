@@ -40,34 +40,20 @@ svg.inline {
 
 
 .badge {
-    /* Set the bg and text colors in the component */
     font-size: var(--fs-neg-2);
-    font-weight: 700;
-    padding: 3px 8px;
+    font-weight: 600;
+    padding: 4px 8px;
     border-radius: var(--border-radius-sm);
     white-space: nowrap;
-
-    &.badge-sm {
-        font-size: var(--fs-neg-4);
-        padding: 2px 6px;
-    }
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--c-badge-neutral-bg);
+    color: var(--c-badge-neutral-text);
 }
-
-.code {
-    font-family: monospace;
-    font-size: var(--fs-neg-1);
-    background: var(--c-bg-level-2);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--border-radius-sm);
-}
-
-.code-area {
-    padding: var(--spacing-sm-md);
-    background: var(--c-bg);
-    border-radius: var(--border-radius-sm-md);
-    border: 1px solid var(--c-border);
-    color: var(--c-text-soft);
-}
+.badge-primary  { background-color: var(--c-badge-primary-bg); color: var(--c-badge-primary-text); }
+.badge-positive { background-color: var(--c-badge-positive-bg); color: var(--c-badge-positive-text); }
+.badge-warning  { background-color: var(--c-badge-warning-bg); color: var(--c-badge-warning-text); }
+.badge-negative { background-color: var(--c-badge-negative-bg); color: var(--c-badge-negative-text); }
 
 
 span.seperator {

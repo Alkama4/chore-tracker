@@ -1,128 +1,68 @@
 
 /* ----------- Colors ----------- */
 :root {
-    --color-scheme: dark;
+    --color-scheme: light;
 
-    /* Base Colors */
-    --c-bg-base: oklch(0% 0 0);
-
-    --c-text-white-base: oklch(92.5% 0 0);
-    --c-text-black-base: oklch(7.5% 0 0);
-
-    --c-primary:    oklch(92% 0 0);
-    --c-accent:  oklch(32.8% 0.065 240);
-    --c-favourite:  oklch(51.196% 0.175 14);
-    --c-neutral:    oklch(40% 0 0 / 33%);
-    /* --c-neutral:    oklch(28% 0 0); */
-    --c-positive:   oklch(58% 0.14 155);
-    --c-warning:    oklch(75% 0.14 80);
-    --c-negative:   oklch(52% 0.14 27);
-
-
-    /* Offsets and levels */
-    --o-colors-1: 0.03;
-    --o-colors-2: 0.06;
-    --o-bg-1: 0.19; 
-    --o-bg-2: 0.22;
-    --o-border: 0.12;
-    --o-border-strong: 0.12;
-    --o-text-w-n-b: 0.125;
-    --o-text-norm-n-inv: var(--o-text-w-n-b);
-
-    --a-trans: 0.66;
-
-    --hero-backdrop-opacity: 0.4;
-    --hero-backdrop-color: var(--c-bg);
-    --details-backdrop-fade-intensity: 0.5;
-    --details-backdrop-min-brightness: 1;
-
-    /* Borders and inputs */
-    --c-border: oklch(45% 0 0 / 50%);
-    --c-border-strong: oklch(from var(--c-border) calc(l + var(--o-border-strong)) c h);
-
-    --c-input: oklch(12.5% 0 0 / 50%);
-    --c-input-text: var(--c-text);
-    
     /* Background levels */
-    --c-bg: var(--c-bg-base);
-    --c-bg-level-1: oklch(from var(--c-bg-base) calc(l + var(--o-bg-1)) c h);
-    --c-bg-level-2: oklch(from var(--c-bg-base) calc(l + var(--o-bg-2)) c h);
-    --c-bg-opaque:          var(var(--c-bg-opaque-base));
-    --c-bg-opaque-base:     oklch(from var(--c-bg-base) l c h / var(--a-trans));
-    --c-bg-opaque-level-1:  oklch(from var(--c-bg-base) calc(l + var(--o-colors-1)) c h / var(--a-trans));
-    --c-bg-opaque-level-2:  oklch(from var(--c-bg-base) calc(l + var(--o-colors-2)) c h / var(--a-trans));
-    --c-bg-backdrop: oklch(from var(--c-bg-base) calc(l * 0.5) c h / 50%);
+    --c-bg-base: hsl(240, 5%, 95%);
+    --c-bg-level-1: hsl(0, 5%, 100%);
+    --c-bg-level-2: hsl(240, 5%, 95%);
 
-    /* Text levels */
-    --c-text-white: var(--c-text-white-base);
-    --c-text-black: var(--c-text-black-base);
-    --c-text:       var(--c-text-white-base);
-    --c-text-inv:   var(--c-text-black-base);
+    /* Texts */
+    --c-text-strong: hsl(240, 10%, 2.5%);
+    --c-text: hsl(240, 10%, 10%);
+    --c-text-soft: hsl(240, 5%, 33%);
+    --c-text-subtle: hsl(240, 5%, 45%);
+    --c-text-inv: hsl(0, 0%, 100%);
 
-    --c-text-white-strong:  oklch(from var(--c-text-white-base) calc(l + var(--o-text-w-n-b) * 1) c h);
-    --c-text-white-soft:    oklch(from var(--c-text-white-base) calc(l - var(--o-text-w-n-b) * 1) c h);
-    --c-text-white-subtle:  oklch(from var(--c-text-white-base) calc(l - var(--o-text-w-n-b) * 2) c h);
-    --c-text-white-faint:   oklch(from var(--c-text-white-base) calc(l - var(--o-text-w-n-b) * 3) c h);
+    /* Inputs and borders */
+    --c-border: hsl(240, 6%, 90%);
+    --c-border-strong: hsl(240, 5%, 65%);
+    --c-input: hsl(0, 0%, 100%);
+    --c-input-text: var(--c-text);
 
-    --c-text-black-strong:  oklch(from var(--c-text-black-base) calc(l - var(--o-text-w-n-b) * 1) c h);
-    --c-text-black-soft:    oklch(from var(--c-text-black-base) calc(l + var(--o-text-w-n-b) * 1) c h);
-    --c-text-black-subtle:  oklch(from var(--c-text-black-base) calc(l + var(--o-text-w-n-b) * 2) c h);
-    --c-text-black-faint:   oklch(from var(--c-text-black-base) calc(l + var(--o-text-w-n-b) * 3) c h);
+    /* Branding colors */
+    --c-primary: #1e1e24;
+    --c-primary-hover: #2d2d35;
+    --c-primary-active: #0f0f12;
 
-    --c-text-strong:        oklch(from var(--c-text) calc(l + var(--o-text-norm-n-inv) * 1) c h);
-    --c-text-soft:          oklch(from var(--c-text) calc(l - var(--o-text-norm-n-inv) * 1) c h);
-    --c-text-subtle:        oklch(from var(--c-text) calc(l - var(--o-text-norm-n-inv) * 2) c h);
-    --c-text-faint:         oklch(from var(--c-text) calc(l - var(--o-text-norm-n-inv) * 3) c h);
+    --c-accent: #0284c7;
+    --c-accent-hover: #0369a1;
+    --c-accent-active: #0c4a6e;
 
-    --c-text-inv-strong:    oklch(from var(--c-text-inv) calc(l - var(--o-text-norm-n-inv) * 1) c h);
-    --c-text-inv-soft:      oklch(from var(--c-text-inv) calc(l + var(--o-text-norm-n-inv) * 1) c h);
-    --c-text-inv-subtle:    oklch(from var(--c-text-inv) calc(l + var(--o-text-norm-n-inv) * 2) c h);
-    --c-text-inv-faint:     oklch(from var(--c-text-inv) calc(l + var(--o-text-norm-n-inv) * 3) c h);
-    
-    /* Unique color variations */
-    --c-primary-soft:           oklch(from var(--c-primary) calc(l + var(--o-colors-1)) c h);
-    --c-primary-subtle:         oklch(from var(--c-primary) calc(l + var(--o-colors-2)) c h);
-    --c-primary-border:         oklch(from var(--c-primary) calc(l + var(--o-border)) c h);
-    --c-primary-border-strong:  oklch(from var(--c-primary) calc(l + var(--o-border-strong)) c h);
-    --c-primary-transparent:    oklch(from var(--c-primary) l c h / var(--a-trans));
+    --c-positive: #16a34a;
+    --c-positive-hover: #15803d;
+    --c-positive-active: #166534;
 
-    --c-accent-soft:            oklch(from var(--c-accent) calc(l + var(--o-colors-1)) c h);
-    --c-accent-subtle:          oklch(from var(--c-accent) calc(l + var(--o-colors-2)) c h);
-    --c-accent-border:          oklch(from var(--c-accent) calc(l + var(--o-border)) c h);
-    --c-accent-border-strong:   oklch(from var(--c-accent) calc(l + var(--o-border-strong)) c h);
-    --c-accent-transparent:     oklch(from var(--c-accent) l c h / var(--a-trans));
+    --c-warning: #eab308;
+    --c-warning-hover: #ca8a04;
+    --c-warning-active: #a16207;
 
-    --c-favourite-soft:          oklch(from var(--c-favourite) calc(l + var(--o-colors-1)) c h);
-    --c-favourite-subtle:        oklch(from var(--c-favourite) calc(l + var(--o-colors-2)) c h);
-    --c-favourite-border:        oklch(from var(--c-favourite) calc(l + var(--o-border)) c h);
-    --c-favourite-border-strong: oklch(from var(--c-favourite) calc(l + var(--o-border-strong)) c h);
-    --c-favourite-transparent:   oklch(from var(--c-favourite) l c h / var(--a-trans));
+    --c-negative: #dc2626;
+    --c-negative-hover: #b91c1c;
+    --c-negative-active: #991b1b;
 
-    --c-neutral-soft:           oklch(from var(--c-neutral) calc(l + var(--o-colors-1)) c h);
-    --c-neutral-subtle:         oklch(from var(--c-neutral) calc(l + var(--o-colors-2)) c h);
-    --c-neutral-border:         oklch(from var(--c-neutral) calc(l + var(--o-border)) c h);
-    --c-neutral-border-strong:  oklch(from var(--c-neutral) calc(l + var(--o-border-strong)) c h);
-    --c-neutral-transparent:    oklch(from var(--c-neutral) l c h / var(--a-trans));
+    --c-neutral: #e4e4e7;
+    --c-neutral-hover: #d4d4d8;
+    --c-neutral-active: #a1a1aa;
 
-    --c-positive-soft:          oklch(from var(--c-positive) calc(l + var(--o-colors-1)) c h);
-    --c-positive-subtle:        oklch(from var(--c-positive) calc(l + var(--o-colors-2)) c h);
-    --c-positive-border:        oklch(from var(--c-positive) calc(l + var(--o-border)) c h);
-    --c-positive-border-strong: oklch(from var(--c-positive) calc(l + var(--o-border-strong)) c h);
-    --c-positive-transparent:   oklch(from var(--c-positive) l c h / var(--a-trans));
 
-    --c-warning-soft:           oklch(from var(--c-warning) calc(l + var(--o-colors-1)) c h);
-    --c-warning-subtle:         oklch(from var(--c-warning) calc(l + var(--o-colors-2)) c h);
-    --c-warning-border:         oklch(from var(--c-warning) calc(l + var(--o-border)) c h);
-    --c-warning-border-strong:  oklch(from var(--c-warning) calc(l + var(--o-border-strong)) c h);
-    --c-warning-transparent:    oklch(from var(--c-warning) l c h / var(--a-trans));
+    /* Badge colors */
+    --c-badge-neutral-bg: #e4e4e7;
+    --c-badge-neutral-text: #52525b;
 
-    --c-negative-soft:          oklch(from var(--c-negative) calc(l + var(--o-colors-1)) c h);
-    --c-negative-subtle:        oklch(from var(--c-negative) calc(l + var(--o-colors-2)) c h);
-    --c-negative-border:        oklch(from var(--c-negative) calc(l + var(--o-border)) c h);
-    --c-negative-border-strong: oklch(from var(--c-negative) calc(l + var(--o-border-strong)) c h);
-    --c-negative-transparent:   oklch(from var(--c-negative) l c h / var(--a-trans));
+    --c-badge-primary-bg: #e2e8f0;
+    --c-badge-primary-text: #1e293b;
+
+    --c-badge-positive-bg: #dcfce7;
+    --c-badge-positive-text: #166534;
+
+    --c-badge-warning-bg: #fef9c3;
+    --c-badge-warning-text: #854d0e;
+
+    --c-badge-negative-bg: #fee2e2;
+    --c-badge-negative-text: #991b1b;
 }
-
 
 /* ----------- Spacings ----------- */
 :root {
@@ -147,29 +87,16 @@
     --border-radius-xl: 32px;
 }
 
-
 /* ----------- Font sizes ----------- */
 :root {
-    --font-size-base: 1rem;
-
-    --fs-ratio: 1.25;
-    --fs-ratio-neg: 1.1;
- 
-    --fs-neg-4:     calc(var(--fs-neg-3) / var(--fs-ratio-neg));
-    --fs-neg-3:     calc(var(--fs-neg-2) / var(--fs-ratio-neg));
-    --fs-neg-2:     calc(var(--fs-neg-1) / var(--fs-ratio-neg));
-    --fs-neg-1:     calc(var(--fs-0) / var(--fs-ratio-neg));
-    --fs-0:     var(--font-size-base);
-    --fs-1:     calc(var(--fs-0) * var(--fs-ratio));
-    --fs-2:     calc(var(--fs-1) * var(--fs-ratio));
-    --fs-3:     calc(var(--fs-2) * var(--fs-ratio));
-    --fs-4:     calc(var(--fs-3) * var(--fs-ratio));
-
-    /* @media(max-width: 768px) {
-        --font-size-base: 0.9rem;
-    } */
+    --fs-neg-2: 0.75rem;  /* 12px - Badges, tiny text */
+    --fs-neg-1: 0.875rem; /* 14px - Labels, secondary buttons */
+    --fs-0:     1rem;     /* 16px - Main body text */
+    --fs-1:     1.25rem;  /* 20px - h4 */
+    --fs-2:     1.5rem;   /* 24px - h3 */
+    --fs-3:     1.875rem; /* 30px - h2 */
+    --fs-4:     2.25rem;  /* 36px - h1 */
 }
-
 
 /* ----------- Transitions ----------- */
 :root {
@@ -178,7 +105,6 @@
     --transition-ease-in-out: cubic-bezier(0.5, 0, 0.5, 1);
     --transition-bounce: cubic-bezier(.33,.24,.19,1.45);
 }
-
 
 /* ----------- Z indexes ----------- */
 :root {
@@ -201,4 +127,3 @@
         --collection-card-width: 100%
     }
 }
-

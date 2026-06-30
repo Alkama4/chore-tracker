@@ -7,6 +7,10 @@ const routes = [
         component: () => import('@/views/HomePage.vue'),
     },
     {
+        path: '/debug',
+        name: 'Debug',
+        component: () => import('@/views/DebugPage.vue'),
+    },    {
         path: '/:pathMatch(.*)*',
         name: '404',
         component: () => import('@/views/NotFoundPage.vue')
