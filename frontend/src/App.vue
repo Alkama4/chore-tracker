@@ -14,7 +14,7 @@ import { AlbumCovers, Home, List, Plus } from '@boxicons/vue';
                     <li>
                         <router-link 
                             class="btn btn-text no-deco" 
-                            to="/transactions"
+                            to="/chores"
                         >
                             <List pack="filled" size="sm"/>
                             <span>Chores</span>
@@ -23,7 +23,7 @@ import { AlbumCovers, Home, List, Plus } from '@boxicons/vue';
                     <li>
                         <router-link 
                             class="btn btn-text no-deco" 
-                            to="/transactions"
+                            to="/chores/new"
                         >
                             <Plus pack="filled" size="sm"/>
                             <span>New chore</span>
@@ -42,7 +42,7 @@ import { AlbumCovers, Home, List, Plus } from '@boxicons/vue';
             <span>Home</span>
         </router-link>
 
-        <router-link class="btn btn-text no-deco" to="/new">
+        <router-link class="btn btn-text no-deco" to="/chores/new">
             <Plus pack="basic"/>
             <span>New chore</span>
         </router-link>
