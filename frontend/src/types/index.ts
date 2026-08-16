@@ -1,12 +1,10 @@
 // ---- Enums ----
 
-// Match this with your app.enums.ChoreFieldType backend enum
 export enum ChoreFieldType {
-    TEXT = "text",
-    NUMBER = "number",
-    BOOLEAN = "boolean",
-    DATE = "date",
-    // Add any other values defined in app.enums
+    string = "string",
+    float = "float",
+    int = "int",
+    bool = "bool"
 }
 
 
