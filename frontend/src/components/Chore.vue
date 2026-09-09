@@ -1,15 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import { ChevronDown, Edit, EditAlt, Trash } from '@boxicons/vue';
 import { ref } from 'vue';
+import type { ChoreRead } from '@/types';
 
-const props = defineProps({
-    choreData: {
-        type: Object,
-        required: true
-    },
-});
+defineProps<{ choreData: ChoreRead }>();
 
-defineEmits(['edit', 'delete']);
+defineEmits<{
+    edit: [chore: ChoreRead];
+    delete: [choreId: number];
+}>();
 
 const isExpanded = ref(false);
 

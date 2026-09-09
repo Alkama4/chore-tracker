@@ -1,23 +1,26 @@
-<script setup>
+<script setup lang="ts">
 import { computed, reactive } from 'vue';
-import { fastApi } from '@/utils/fastApi';
+import { queryFastApi } from '@/utils/fastApi';
+import type { ChoreCreate, ChoreFieldCreate, ChoreRead, ChoreReplace } from '@/types';
+import { ChoreFieldType } from '@/types';
 import { X } from '@boxicons/vue';
 
-const props = defineProps({
-    chore: {
-        type: Object,
-        default: null
-    }
-});
+const props = defineProps<{ chore?: ChoreRead }>();
 
-const emit = defineEmits([
-    'saved',
-    'cancel'
-]);
+const emit = defineEmits<{
+    saved: [];
+    cancel: [];
+}>();
+
+type FormField = ChoreFieldCreate & { field_id?: number };
 
 const isEditing = computed(() => !!props.chore);
 
-const form = reactive({
+const form = reactive<{
+    name: string;
+    manual_cadence: string;
+    fields: FormField[];
+}>({
     name: props.chore?.name ?? '',
     manual_cadence: props.chore?.manual_cadence ?? '',
     fields: props.chore?.fields?.map(field => ({
@@ -30,31 +33,39 @@ const form = reactive({
 function addField() {
     form.fields.push({
         name: '',
-        value_type: 'string'
+        value_type: ChoreFieldType.string
     });
 }
 
-function removeField(index) {
+function removeField(index: number) {
     form.fields.splice(index, 1);
 }
 
 async function handleSubmit() {
-    const payload = {
+    const payload: ChoreCreate = {
         name: form.name,
         manual_cadence: form.manual_cadence || null,
-        fields: form.fields
+        fields: form.fields.map(({ field_id, ...field }) => field)
     };
 
     if (isEditing.value) {
-        await fastApi(
+        const replacePayload: ChoreReplace = {
+            ...payload,
+            fields: form.fields.map(({ field_id, ...field }) => ({
+                ...field,
+                ...(field_id === undefined ? {} : { field_id })
+            }))
+        };
+
+        await queryFastApi(
             `/chore/${props.chore.chore_id}`,
             {
                 method: 'PUT',
-                body: payload
+                body: replacePayload
             }
         );
     } else {
-        await fastApi('/chore', {
+        await queryFastApi('/chore', {
             method: 'POST',
             body: payload
         });

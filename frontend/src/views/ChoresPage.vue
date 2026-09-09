@@ -1,17 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import Chore from '@/components/Chore.vue';
 import ChoreForm from '@/components/ChoreForm.vue';
-import { fastApi } from '@/utils/fastApi';
+import { queryFastApi } from '@/utils/fastApi';
+import type { ChoreRead } from '@/types';
 import { Plus } from '@boxicons/vue';
 import { ref, onMounted } from 'vue';
 
-const chores = ref([]);
+const chores = ref<ChoreRead[]>([]);
 
 const isCreating = ref(false);
-const editingChoreId = ref(null);
+const editingChoreId = ref<number | null>(null);
 
 async function getChores() {
-    const data = await fastApi('/chore', {
+    const data = await queryFastApi<{ chores?: ChoreRead[] }>('/chore', {
         method: 'GET'
     });
 
@@ -23,7 +24,7 @@ function handleCreate() {
     editingChoreId.value = null;
 }
 
-function handleEdit(chore) {
+function handleEdit(chore: ChoreRead) {
     isCreating.value = false;
     editingChoreId.value = chore.chore_id;
 }
@@ -38,12 +39,12 @@ async function handleSaved() {
     handleCancel();
 }
 
-async function handleDelete(choreId) {
+async function handleDelete(choreId: number) {
     if (!confirm("Are you sure you want to delete this chore?")) {
         return;
     }
 
-    await fastApi(`/chore/${choreId}`, {
+    await queryFastApi(`/chore/${choreId}`, {
         method: 'DELETE'
     });
 
