@@ -8,8 +8,8 @@ button, .btn {
     align-items: center;
     vertical-align: middle;
     gap: var(--spacing-xs-sm);
-    padding: var(--spacing-sm) var(--spacing-md-lg);
-    border-radius: var(--border-radius-md);
+    padding: var(--spacing-sm-md) var(--spacing-md-lg);
+    border-radius: 100px;
     cursor: pointer;
     box-sizing: border-box;
     border: 1px solid transparent;
@@ -80,5 +80,5 @@ button:disabled, .btn:disabled {
 }
 
 .btn-even-padding {
-    padding-inline: var(--spacing-sm-md);
+    padding: var(--spacing-md) var(--spacing-md);
 }

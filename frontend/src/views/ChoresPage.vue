@@ -56,7 +56,6 @@ onMounted(getChores);
 
 <template>
     <div class="chores-page layout-contained">
-
         <div class="page-header header-margin">
             <h1>Chores</h1>
 
@@ -70,26 +69,19 @@ onMounted(getChores);
             </button>
         </div>
 
-        <div class="card create-chore-card" v-if="isCreating">
-            <ChoreForm
-                @saved="handleSaved"
-                @cancel="handleCancel"
-            />
-        </div>
-
-        <div class="card">
-            <!-- CREATE FORM -->
-
-            <!-- EXISTING CHORES -->
+        <div>
+            
             <div class="chores-wrapper" v-if="chores.length">
-                <div
-                    v-for="(chore, index) in chores"
-                    :key="chore.chore_id"
-                    class="chore-wrapper"
-                >
-                    <hr v-if="index != 0">
+                <ChoreForm
+                    v-if="isCreating"
+                    @saved="handleSaved"
+                    @cancel="handleCancel"
+                />
 
-                    <!-- EDIT FORM -->
+                <template
+                    v-for="chore in chores"
+                    :key="chore.chore_id"
+                >
                     <ChoreForm
                         v-if="editingChoreId === chore.chore_id"
                         :chore="chore"
@@ -97,14 +89,13 @@ onMounted(getChores);
                         @cancel="handleCancel"
                     />
 
-                    <!-- NORMAL CHORE -->
                     <Chore
                         v-else
                         :chore-data="chore"
                         @edit="handleEdit"
                         @delete="handleDelete"
                     />
-                </div>
+                </template>
             </div>
 
             <div
@@ -119,7 +110,6 @@ onMounted(getChores);
                     button to create one.
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -135,16 +125,9 @@ onMounted(getChores);
     }
 }
 
-.create-chore-card {
-    margin-bottom: var(--spacing-md);
-}
-
 .chores-wrapper {
     display: flex;
     flex-direction: column;
-    /* gap: var(--spacing-md); */
-}
-.chore-wrapper hr {
-    margin-inline: unset;
+    gap: var(--spacing-md);
 }
 </style>

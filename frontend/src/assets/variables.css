@@ -89,6 +89,7 @@
 
 /* ----------- Font sizes ----------- */
 :root {
+    --fs-neg-3: 0.6875rem;/* 11px - Small Badges */
     --fs-neg-2: 0.75rem;  /* 12px - Badges, tiny text */
     --fs-neg-1: 0.875rem; /* 14px - Labels, secondary buttons */
     --fs-0:     1rem;     /* 16px - Main body text */

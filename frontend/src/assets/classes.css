@@ -55,6 +55,12 @@ svg.inline {
 .badge-warning  { background-color: var(--c-badge-warning-bg); color: var(--c-badge-warning-text); }
 .badge-negative { background-color: var(--c-badge-negative-bg); color: var(--c-badge-negative-text); }
 
+.badge-sm {
+    font-size: var(--fs-neg-3);
+    font-weight: 500;
+    padding: 3px 6px;
+}
+
 
 span.seperator {
     opacity: 0.5;

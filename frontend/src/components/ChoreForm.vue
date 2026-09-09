@@ -77,7 +77,7 @@ async function handleSubmit() {
 
 <template>
     <form
-        class="chore-form"
+        class="card chore-form"
         :class="{'editing': isEditing}"
         @submit.prevent="handleSubmit"
     >
@@ -107,7 +107,7 @@ async function handleSubmit() {
             </div>
     
             <div class="chore-fields-section">
-                <h4>Fields</h4>
+                <label>Custom Fields</label>
 
                 <div
                     v-for="(field, index) in form.fields"
@@ -140,7 +140,7 @@ async function handleSubmit() {
     
                     <button
                         type="button"
-                        class="btn-text btn-even-padding"
+                        class="btn-text delete-row-button"
                         @click="removeField(index)"
                     >
                         <X/>
@@ -171,7 +171,7 @@ async function handleSubmit() {
 
             <button
                 type="button"
-                class="btn-secondary"
+                class="btn-outline"
                 @click="$emit('cancel')"
             >
                 Cancel
@@ -183,39 +183,49 @@ async function handleSubmit() {
 <style scoped>
 form {
     box-sizing: border-box;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2)
 }
-form.editing {
+/* form.editing {
     background-color: var(--c-bg-level-2);
     padding: var(--spacing-md);
     border-radius: var(--border-radius-md);
-}
+} */
 
 .form-fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg)
 }
 
 label {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
-    max-width: 400px;
+    /* max-width: 400px; */
 }
 
 .chore-fields-section  {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-xs);
+
     .field-row {
         display: flex;
         align-items: center;
-        column-gap: var(--spacing-xs);
-    }
+        column-gap: var(--spacing-sm);
 
-    input,
-    select {
-        margin: 0;
+        input { width: 100% }
+        select { width: 200px }
+        input, select { margin: 0 }
+    }
+    
+
+    .delete-row-button {
+        padding: var(--spacing-sm);
     }
 
     .add-field-button {
-        margin-top: var(--spacing-md);
+        margin-top: var(--spacing-sm);
     }
 }
 
