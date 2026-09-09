@@ -1,58 +1,30 @@
-import axios from 'axios';
-import { useAuthStore } from '../stores/auth';
 import { API_BASE_URL } from './conf';
-import router from '@/router';
 
-// Axios client
-export const fastApi = axios.create({
-    baseURL: API_BASE_URL,
-    headers: { 'Content-Type': 'application/json' },
-    withCredentials: true // important so cookies are sent automatically
-});
+export const fastApi = async (endpoint, options = {}) => {
+    const { method = 'GET', params, body, ...customConfig } = options;
 
-
-// Set the access token into the headers
-fastApi.interceptors.request.use((config) => {
-    const auth = useAuthStore();
-
-    // Attach token if available
-    if (auth.accessToken) {
-        config.headers.Authorization = `Bearer ${auth.accessToken}`;
+    let url = `${API_BASE_URL}${endpoint}`;
+    if (params) {
+        const searchParams = new URLSearchParams(params).toString();
+        url += `?${searchParams}`;
     }
 
-    return config;
-});
+    const config = {
+        method,
+        headers: { 'Content-Type': 'application/json', ...customConfig.headers },
+        credentials: 'include', // This is the 'withCredentials' equivalent for cookies
+        ...customConfig,
+    };
 
-// Response interceptor for automatic refresh
-fastApi.interceptors.response.use(
-    response => response,
-    async error => {
-        const auth = useAuthStore();
-        const originalRequest = error.config;
-
-        const isAuthEndpoint =
-            originalRequest.url.startsWith('/auth/') &&
-            !originalRequest.url.startsWith('/auth/me');
-
-        if (
-            error.response?.status === 401 &&
-            !originalRequest._retry &&
-            !isAuthEndpoint
-        ) {
-            originalRequest._retry = true;
-            try {
-                await auth.refresh();
-                originalRequest.headers.Authorization = `Bearer ${auth.accessToken}`;
-                return fastApi(originalRequest);
-            } catch {
-                auth.accessToken = null;
-                router.push({
-                    path: '/login',
-                    query: { redirect_reason: 'session_expired' }
-                })
-            }
-        }
-
-        return Promise.reject(error);
+    if (body) {
+        config.body = JSON.stringify(body);
     }
-);
+
+    const response = await fetch(url, config);
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+};

@@ -78,3 +78,7 @@ button:disabled, .btn:disabled {
     border-radius: 100px;
     font-weight: 500;
 }
+
+.btn-even-padding {
+    padding-inline: var(--spacing-sm-md);
+}
