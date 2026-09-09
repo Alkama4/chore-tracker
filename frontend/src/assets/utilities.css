@@ -107,12 +107,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     min-height: 225px;
 
-    padding: var(--spacing-xl);
+    color: var(--c-text-subtle);
+    border: 2px dashed var(--c-border);
+    border-radius: 8px;
 
-    h2 {
+    gap: var(--spacing-sm);
+
+    h3 {
         margin: 0;
+        color: var(--c-text);
     }
 }
 

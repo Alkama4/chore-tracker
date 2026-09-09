@@ -97,9 +97,6 @@ form, .settings-list {
     flex-direction: column;
     width: 100%;
 }
-form {
-    max-width: 500px;
-}
 form input,
 form select,
 .settings-list input,
@@ -137,7 +134,7 @@ form .checkbox-row input[type="checkbox"],
 /* --------- Basic elements --------- */
 
 /* Headers */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .header-margin {
     margin: 0;
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
