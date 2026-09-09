@@ -1,5 +1,5 @@
 <script setup>
-import { AlbumCovers, Home, List, Plus } from '@boxicons/vue';
+import { Home, List, ListPlus } from '@boxicons/vue';
 </script>
 
 <template>
@@ -23,10 +23,10 @@ import { AlbumCovers, Home, List, Plus } from '@boxicons/vue';
                     <li>
                         <router-link 
                             class="btn btn-text no-deco" 
-                            to="/new"
+                            to="/chores/log"
                         >
-                            <Plus pack="filled" size="sm"/>
-                            <span>New chore</span>
+                            <ListPlus pack="filled" size="sm"/>
+                            <span>Log chore</span>
                         </router-link>
                     </li>
                 </ul>
@@ -42,9 +42,9 @@ import { AlbumCovers, Home, List, Plus } from '@boxicons/vue';
             <span>Home</span>
         </router-link>
 
-        <router-link class="btn btn-text no-deco" to="/new">
-            <Plus pack="basic"/>
-            <span>New chore</span>
+        <router-link class="btn btn-text no-deco" to="/chores/log">
+            <ListPlus pack="basic"/>
+            <span>Log chore</span>
         </router-link>
         <router-link class="btn btn-text no-deco" to="/chores">
             <List pack="filled"/>
