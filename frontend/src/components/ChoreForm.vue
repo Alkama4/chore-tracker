@@ -3,7 +3,7 @@ import { computed, reactive } from 'vue';
 import { queryFastApi } from '@/utils/fastApi';
 import type { ChoreCreate, ChoreFieldCreate, ChoreRead, ChoreReplace } from '@/types';
 import { ChoreFieldType } from '@/types';
-import { X } from '@boxicons/vue';
+import { EditAlt, Plus, X } from '@boxicons/vue';
 
 const props = defineProps<{ chore?: ChoreRead }>();
 
@@ -15,6 +15,11 @@ const emit = defineEmits<{
 type FormField = ChoreFieldCreate & { field_id?: number };
 
 const isEditing = computed(() => !!props.chore);
+
+const headerText = computed(() => {
+    if (form.name.trim()) return form.name;
+    return isEditing ? 'Unnamed Chore' : 'New Chore';
+})
 
 const form = reactive<{
     name: string;
@@ -82,7 +87,10 @@ async function handleSubmit() {
         @submit.prevent="handleSubmit"
     >
         <h3>
-            {{ isEditing ? 'Edit Chore' : 'Create Chore' }}
+            <EditAlt v-if="isEditing" pack="filled"/>
+            <Plus v-else pack="filled"/>
+            
+            <span>{{ headerText }}</span>
         </h3>
 
         <div class="form-fields">
@@ -185,11 +193,12 @@ form {
     box-sizing: border-box;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2)
 }
-/* form.editing {
-    background-color: var(--c-bg-level-2);
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius-md);
-} */
+
+h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
 
 .form-fields {
     display: grid;
@@ -201,7 +210,6 @@ label {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
-    /* max-width: 400px; */
 }
 
 .chore-fields-section  {

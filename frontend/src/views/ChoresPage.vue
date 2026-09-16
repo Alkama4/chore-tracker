@@ -70,13 +70,11 @@ onMounted(getChores);
         </div>
 
         <div>
-            
             <div class="chores-wrapper" v-if="chores.length">
-                <ChoreForm
-                    v-if="isCreating"
-                    @saved="handleSaved"
-                    @cancel="handleCancel"
-                />
+                <template v-if="isCreating">
+                    <ChoreForm @saved="handleSaved" @cancel="handleCancel"/>
+                    <hr>
+                </template>
 
                 <template
                     v-for="chore in chores"
