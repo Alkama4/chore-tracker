@@ -47,29 +47,27 @@ function removeField(index: number) {
 }
 
 async function handleSubmit() {
-    const payload: ChoreCreate = {
-        name: form.name,
-        manual_cadence: form.manual_cadence || null,
-        fields: form.fields.map(({ field_id, ...field }) => field)
-    };
-
     if (isEditing.value) {
-        const replacePayload: ChoreReplace = {
-            ...payload,
-            fields: form.fields.map(({ field_id, ...field }) => ({
-                ...field,
-                ...(field_id === undefined ? {} : { field_id })
-            }))
+        const payload: ChoreReplace = {
+            name: form.name,
+            manual_cadence: form.manual_cadence || null,
+            fields: form.fields
         };
 
         await queryFastApi(
             `/chore/${props.chore.chore_id}`,
             {
                 method: 'PUT',
-                body: replacePayload
+                body: payload
             }
         );
     } else {
+        const payload: ChoreCreate = {
+            name: form.name,
+            manual_cadence: form.manual_cadence || null,
+            fields: form.fields.map(({ field_id, ...field }) => field)
+        };
+
         await queryFastApi('/chore', {
             method: 'POST',
             body: payload

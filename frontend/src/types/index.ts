@@ -18,7 +18,7 @@ export interface ChoreFieldBase {
 export interface ChoreFieldCreate extends ChoreFieldBase {}
 
 export interface ChoreFieldReplace extends ChoreFieldBase {
-    field_id: number;
+    field_id?: number;
 }
 
 export interface ChoreFieldRead extends ChoreFieldBase {

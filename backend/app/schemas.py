@@ -15,7 +15,7 @@ class ChoreFieldCreate(ChoreFieldBase):
     pass
 
 class ChoreFieldReplace(ChoreFieldBase):
-    field_id: int
+    field_id: Optional[int] = None
 
 class ChoreFieldRead(ChoreFieldBase):
     field_id: int

@@ -58,43 +58,64 @@ async def update_chore(
     chore: ChoreReplace,
     db: AsyncSession = Depends(get_db)
 ):
-    stmt = select(Chore).where(Chore.chore_id == chore_id).options(selectinload(Chore.fields))
+    stmt = (
+        select(Chore)
+        .where(Chore.chore_id == chore_id)
+        .options(selectinload(Chore.fields))
+    )
+
     result = await db.execute(stmt)
     chore_model = result.scalar_one_or_none()
+
     if not chore_model:
         raise HTTPException(status_code=404, detail="Chore not found")
-    
+
     chore_model.name = chore.name
     chore_model.manual_cadence = chore.manual_cadence
-    
-    # Handle fields: update existing, create new, or delete removed
+
     if chore.fields is not None:
-        existing_field_ids = {f.field_id for f in chore_model.fields}
-        updated_field_ids = set()
-        current_fields = list(chore_model.fields)
-        
+        existing_fields = {
+            field.field_id: field
+            for field in chore_model.fields
+        }
+
+        submitted_field_ids = set()
+
         for field in chore.fields:
-            if hasattr(field, 'field_id') and field.field_id is not None:
-                existing = next((f for f in current_fields if f.field_id == field.field_id), None)
-                if existing:
-                    existing.name = field.name
-                    existing.value_type = field.value_type
-                    updated_field_ids.add(field.field_id)
+            if field.field_id is not None:
+                # Existing field
+                existing = existing_fields.get(field.field_id)
+
+                if existing is None:
+                    raise HTTPException(
+                        status_code=400,
+                        detail=f"Field {field.field_id} does not belong to this chore"
+                    )
+
+                existing.name = field.name
+                existing.value_type = field.value_type
+
+                submitted_field_ids.add(field.field_id)
+
             else:
-                chore_model.fields.append(ChoreField(
-                    name=field.name,
-                    value_type=field.value_type,
-                ))
-        
-        for f in current_fields:
-            if f.field_id in existing_field_ids and f.field_id not in updated_field_ids:
-                chore_model.fields.remove(f)
-                await db.delete(f)
-    
+                # New field
+                chore_model.fields.append(
+                    ChoreField(
+                        name=field.name,
+                        value_type=field.value_type,
+                    )
+                )
+
+        # Anything that existed before but wasn't submitted
+        # has been removed by the user.
+        for field_id, field in existing_fields.items():
+            if field_id not in submitted_field_ids:
+                chore_model.fields.remove(field)
+
     await db.commit()
     await db.refresh(chore_model, attribute_names=["fields"])
-    return chore_model
 
+    return chore_model
 
 @router.delete("/{chore_id}", response_model=ConfirmationResponse)
 async def delete_chore(
