@@ -1,6 +1,6 @@
 from enum import Enum
 
-class ChoreFieldType(str, Enum):
+class LogFieldType(str, Enum):
     string = "string"
     float = "float"
     int = "int"

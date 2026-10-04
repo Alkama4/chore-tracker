@@ -1,6 +1,6 @@
 // ---- Enums ----
 
-export enum ChoreFieldType {
+export enum LogFieldType {
     string = "string",
     float = "float",
     int = "int",
@@ -8,88 +8,114 @@ export enum ChoreFieldType {
 }
 
 
-// ---- Chore Field ----
+// ---- Log Group ----
 
-export interface ChoreFieldBase {
+export interface LogGroupBase {
     name: string;
-    value_type: ChoreFieldType;
 }
 
-export interface ChoreFieldCreate extends ChoreFieldBase {}
+export interface LogGroupCreate extends LogGroupBase {}
 
-export interface ChoreFieldReplace extends ChoreFieldBase {
+export interface LogGroupReplace extends LogGroupBase {}
+
+export interface LogGroupRead extends LogGroupBase {
+    group_id: number;
+}
+
+export interface LogGroupReadList {
+    groups: LogGroupRead[];
+}
+
+
+// ---- Log Field ----
+
+export interface LogFieldBase {
+    name: string;
+    value_type: LogFieldType;
+}
+
+export interface LogFieldCreate extends LogFieldBase {}
+
+export interface LogFieldReplace extends LogFieldBase {
     field_id?: number;
 }
 
-export interface ChoreFieldRead extends ChoreFieldBase {
+export interface LogFieldRead extends LogFieldBase {
     field_id: number;
 }
 
 
-// ---- Chore ----
+// ---- Log Item ----
 
-export interface ChoreBase {
+export interface LogItemBase {
+    group_id: number;
     name: string;
-    manual_cadence?: string | null;
+    schedule_rrule?: string | null;
 }
 
-export interface ChoreCreate extends ChoreBase {
-    fields?: ChoreFieldCreate[];
+export interface LogItemCreate extends LogItemBase {
+    fields?: LogFieldCreate[];
 }
 
-export interface ChoreReplace extends ChoreBase {
-    fields?: ChoreFieldReplace[];
+export interface LogItemReplace extends LogItemBase {
+    fields?: LogFieldReplace[];
 }
 
-export interface ChoreRead extends ChoreBase {
-    chore_id: number;
-    fields?: ChoreFieldRead[];
+export interface LogItemRead extends LogItemBase {
+    item_id: number;
+    fields?: LogFieldRead[];
 }
 
-export interface ChoreReadList {
-    chores?: ChoreRead[];
+export interface LogItemReadList {
+    items: LogItemRead[];
 }
 
 
-// ---- Chore Event Field ----
+// ---- Log Entry Value ----
 
-export interface ChoreEventFieldBase {
+export interface LogEntryValueBase {
     field_id: number;
     value: string;
 }
 
-export interface ChoreEventFieldCreate extends ChoreEventFieldBase {}
+export interface LogEntryValueCreate extends LogEntryValueBase {}
 
-export interface ChoreEventFieldReplace extends ChoreEventFieldBase {
+export interface LogEntryValueReplace extends LogEntryValueBase {
     value_id: number;
 }
 
-export interface ChoreEventFieldRead extends ChoreEventFieldBase {
-    field: ChoreFieldRead;
+export interface LogEntryValueRead {
     value_id: number;
+    field_id: number;
+    field: LogFieldRead;
+    value: string;
 }
 
 
-// ---- Chore Event ----
+// ---- Log Entry ----
 
-export interface ChoreEventBase {
-    chore_id: number;
-    date: string; // ISO Date strings from API (e.g. "2026-08-15")
+export interface LogEntryBase {
+    item_id: number;
+    logged_at: string; // ISO 8601 datetime string from API
     notes?: string | null;
 }
 
-export interface ChoreEventCreate extends ChoreEventBase {
-    field_values?: ChoreEventFieldCreate[];
+export interface LogEntryCreate extends LogEntryBase {
+    field_values?: LogEntryValueCreate[];
 }
 
-export interface ChoreEventReplace extends ChoreEventBase {
-    event_id: number;
-    field_values?: ChoreEventFieldReplace[];
+export interface LogEntryReplace extends LogEntryBase {
+    entry_id: number;
+    field_values?: LogEntryValueReplace[];
 }
 
-export interface ChoreEventRead extends ChoreEventBase {
-    event_id: number;
-    field_values?: ChoreEventFieldRead[];
+export interface LogEntryRead extends LogEntryBase {
+    entry_id: number;
+    field_values?: LogEntryValueRead[];
+}
+
+export interface LogEntryReadList {
+    entries: LogEntryRead[];
 }
 
 
